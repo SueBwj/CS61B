@@ -70,8 +70,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         if (isEmpty()) {
             throw new RuntimeException("Ring buffer underflow");
         } else {
-            T val = rb[first];
-            return val;
+            return rb[first];
         }
     }
 
