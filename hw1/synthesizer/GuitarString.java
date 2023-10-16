@@ -23,7 +23,7 @@ public class GuitarString {
         //       Your buffer should be initially filled with zeros.
         int size = (int) Math.round(SR / frequency);
         buffer = new ArrayRingBuffer<Double>(size);
-        for (int i = 0; i < buffer.capacity(); i++) {
+        for (int i = 0; i < size; i++) {
             buffer.enqueue(0.0);
         }
     }
