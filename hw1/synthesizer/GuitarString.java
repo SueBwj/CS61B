@@ -1,5 +1,8 @@
 // TODO: Make sure to make this class a part of the synthesizer package
-//package <package name>;
+package synthesizer;
+
+import java.awt.geom.Arc2D;
+import java.util.HashSet;
 
 //Make sure this class is public
 public class GuitarString {
@@ -18,6 +21,8 @@ public class GuitarString {
         //       cast the result of this divsion operation into an int. For better
         //       accuracy, use the Math.round() function before casting.
         //       Your buffer should be initially filled with zeros.
+        int size = (int) Math.round(SR / frequency);
+        buffer = new ArrayRingBuffer<Double>(size);
     }
 
 
@@ -28,6 +33,14 @@ public class GuitarString {
         //       double r = Math.random() - 0.5;
         //
         //       Make sure that your random numbers are different from each other.
+        HashSet<Double> hset = new HashSet<Double>(buffer.capacity());
+        while (!buffer.isFull()) {
+            double r = Math.random() - 0.5;
+            if (!hset.contains(r)) {
+                hset.add(r);
+                buffer.enqueue(r);
+            }
+        }
     }
 
     /* Advance the simulation one time step by performing one iteration of
@@ -37,11 +50,15 @@ public class GuitarString {
         // TODO: Dequeue the front sample and enqueue a new sample that is
         //       the average of the two multiplied by the DECAY factor.
         //       Do not call StdAudio.play().
+        double val1 = buffer.dequeue();
+        double val2 = buffer.peek();
+        double ans = (val1 + val2) * DECAY * 0.5;
+        buffer.enqueue(ans);
     }
 
     /* Return the double at the front of the buffer. */
     public double sample() {
         // TODO: Return the correct thing.
-        return 0;
+        return buffer.peek();
     }
 }
