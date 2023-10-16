@@ -1,6 +1,10 @@
 package synthesizer;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 /** Tests the ArrayRingBuffer class.
  *  @author Josh Hug
@@ -9,26 +13,26 @@ import static org.junit.Assert.*;
 public class TestArrayRingBuffer {
     @Test
     public void someTest() {
-        ArrayRingBuffer<Integer> arb = new ArrayRingBuffer(10);
-        arb.enqueue(2);
-        arb.enqueue(3);
-        arb.enqueue(1);
-        arb.enqueue(0);
-        int output1 = arb.peek();
-        int excepted1 = 2;
-        assertEquals(output1, excepted1); // inspect whether peek() is right
-        int output2 = arb.dequeue();
-        assertEquals(output2, excepted1); // inspect whether dequeue() is right
-        int output3 = arb.peek();
-        int excepted2 = 3;
-        assertEquals(output3, excepted2);
-        int output4 = arb.dequeue();
-        int excepted3 = 3;
-        assertEquals(output4, excepted3);
-        int output5 = arb.dequeue();
-        int excepted4 = 1;
-        assertEquals(output5, excepted4);
-        assertFalse(arb.isEmpty());
+        ArrayRingBuffer<Integer> arb = new ArrayRingBuffer<>(5);
+        assertTrue(arb.isEmpty());
+        for (int i = 0; i < 3; i++) {
+            arb.enqueue(i);
+        }
+        assertEquals(0, (int) arb.peek());
+        assertEquals(0, (int) arb.dequeue());
+        arb.dequeue();
+        for (int i = 303; i < 307; i++) {
+            arb.enqueue(i);
+        }
+        assertTrue(arb.isFull());
+        assertEquals(2, (int) arb.dequeue());
+
+        List<Integer> expected = Arrays.asList(303, 304, 305, 306);
+        List<Integer> actual = new ArrayList<>();
+        for (Integer item : arb) {
+            actual.add(item);
+        }
+        assertEquals(expected, actual);
     }
 
     /** Calls tests for ArrayRingBuffer. */
