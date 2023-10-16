@@ -1,6 +1,5 @@
 package synthesizer;
 
-import java.util.HashSet;
 
 //Make sure this class is public
 public class GuitarString {
@@ -25,13 +24,9 @@ public class GuitarString {
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
-        HashSet<Double> hset = new HashSet<Double>(buffer.capacity());
-        while (!buffer.isFull()) {
-            double r = Math.random() - 0.5;
-            if (!hset.contains(r)) {
-                hset.add(r);
-                buffer.enqueue(r);
-            }
+        for (int i = 0; i < buffer.capacity(); i++) {
+            buffer.dequeue();
+            buffer.enqueue(Math.random() - 0.5);
         }
     }
 
