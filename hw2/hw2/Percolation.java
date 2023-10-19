@@ -4,10 +4,10 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private WeightedQuickUnionUF site;
-    private WeightedQuickUnionUF site2;
+    private WeightedQuickUnionUF site2; //该并查集不连接容器的底部，如果连接了容器的底部会导致“上浮”
     private int N;
-    private int topSite;
-    private int bottomSite;
+    private int topSite; //用一个虚拟的头节点把容器的第一行连接起来
+    private int bottomSite; //用一个虚拟的尾节点把容器的最后一行连接起来
     private int numOpen;
     private boolean[][] flagOpen;
     private int xyto1D(int x, int y) {
