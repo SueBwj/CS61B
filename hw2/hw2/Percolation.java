@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private WeightedQuickUnionUF site;
+    private WeightedQuickUnionUF site2;
     private int N;
     private int topSite;
     private int bottomSite;
@@ -21,6 +22,7 @@ public class Percolation {
         if ((newRow >= 0 && newCol >= 0) && (newRow < N && newCol < N)) {
             if (flagOpen[newRow][newCol]) {
                 site.union(xyto1D(row, col), xyto1D(newRow, newCol));
+                site2.union(xyto1D(row, col), xyto1D(newRow, newCol));
             }
         }
     }
@@ -33,10 +35,13 @@ public class Percolation {
         topSite = N * N;    // 虚拟节点
         bottomSite = N * N + 1; // 虚拟节点
         site = new WeightedQuickUnionUF(N * N + 2); // +2是包含虚拟头底节点
+        site2 = new WeightedQuickUnionUF(N * N + 1); // +1是包含虚拟头节点
         flagOpen = new boolean[N][N];
+        numOpen = 0;
         // 将topSite与所有的头节点连接
         for (int i = 0; i < N; i++) {
             site.union(xyto1D(0, i), topSite);
+            site2.union(xyto1D(0, i), topSite);
         }
         // 将bottomSite与所有的尾节点连接
         for (int i = 0; i < N; i++) {
@@ -69,7 +74,10 @@ public class Percolation {
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
         validateRange(row, col);
-        return site.connected(xyto1D(row, col), topSite);
+        if (!isOpen(row, col)) {
+            return false;
+        }
+        return site2.connected(xyto1D(row, col), topSite);
     }
     // number of open sites
     public int numberOfOpenSites() {
@@ -77,6 +85,9 @@ public class Percolation {
     }
     // does the system percolate?
     public boolean percolates() {
+        if (numOpen <= 0) {
+            return false;
+        }
         return site.connected(topSite, bottomSite);
     }
 }
