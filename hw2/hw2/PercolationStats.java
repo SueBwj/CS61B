@@ -11,8 +11,9 @@ public class PercolationStats {
             throw new IllegalArgumentException();
         }
         this.T = T;
-        Percolation percolation = pf.make(N);
+        openFraction = new double[T];
         for (int i = 0; i < T; i++) {
+            Percolation percolation = pf.make(N); // 调用pf的make函数构造Percolation
             while (!percolation.percolates()) {
                 int x;
                 int y;
@@ -22,7 +23,7 @@ public class PercolationStats {
                 } while (percolation.isOpen(x, y));
                 percolation.open(x, y);
             }
-            openFraction[i] = (double) percolation.numberOfOpenSites() / N * N;
+            openFraction[i] = (double) percolation.numberOfOpenSites() / (N * N);
         }
     }
     public double mean() {
