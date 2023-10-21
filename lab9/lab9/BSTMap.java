@@ -134,12 +134,30 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
         if (key.compareTo(p.key) == 0) {
             V returnVal = p.value;
-            Node tmp = findRightMin(p.right);
-            p.key = tmp.key;
-            p.value = tmp.value;
-            tmp = null;
-            size--;
-            return returnVal;
+            if (p.left == null && p.right == null) {
+                size--;
+                p = null;
+                return returnVal;
+            } else {
+                if (p.left != null && p.right != null) {
+                    Node tmp = findRightMin(p.right);
+                    p.key = tmp.key;
+                    p.value = tmp.value;
+                    tmp = null;
+                    size--;
+                    return returnVal;
+                } else {
+                    if (p.left != null) {
+                        p = p.left;
+                    }
+                    if (p.right != null) {
+                        p = p.right;
+                    }
+                    size--;
+                    return returnVal;
+                }
+            }
+
         } else {
             if (key.compareTo(p.key) > 0) {
                 return removeHelper(key, p.right);
@@ -166,12 +184,29 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
         if (key.compareTo(root.key) == 0 && value == p.value) {
             V returnVal = root.value;
-            Node tmp = findRightMin(root.right);
-            root.key = tmp.key;
-            root.value = tmp.value;
-            tmp = null;
-            size--;
-            return returnVal;
+            if (p.left == null && p.right == null) {
+                size--;
+                p = null;
+                return returnVal;
+            } else {
+                if (p.left != null && p.right != null) {
+                    Node tmp = findRightMin(p.right);
+                    p.key = tmp.key;
+                    p.value = tmp.value;
+                    tmp = null;
+                    size--;
+                    return returnVal;
+                } else {
+                    if (p.left != null) {
+                        p = p.left;
+                    }
+                    if (p.right != null) {
+                        p = p.right;
+                    }
+                    size--;
+                    return returnVal;
+                }
+            }
         } else {
             if (key.compareTo(root.key) > 0) {
                 return removeHelper(key, value, root.right);
