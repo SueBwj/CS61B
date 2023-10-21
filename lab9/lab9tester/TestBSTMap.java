@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import lab9.BSTMap;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Tests by Brendan Hu, Spring 2015, revised for 2018 by Josh Hug
  */
@@ -84,6 +87,54 @@ public class TestBSTMap {
         b.put("hi", 1);
         assertTrue(b.containsKey("hi"));
         assertTrue(b.get("hi") != null);
+    }
+
+    @Test
+    public void KetSetTest() {
+        BSTMap<String, Integer> b = new BSTMap<String, Integer>();
+        b.put("hi", 0);
+        b.put("hi1", 1);
+        b.put("hi2", 2);
+        b.put("hi3", 3);
+        b.put("hi4", 4);
+        Set<String> output = b.keySet();
+        Set<String> expected = new HashSet<>();
+        expected.add("hi");
+        expected.add("hi1");
+        expected.add("hi2");
+        expected.add("hi3");
+        expected.add("hi4");
+        assertEquals(output,expected);
+
+        // test null
+        BSTMap<String, Integer> b1 = new BSTMap<String, Integer>();
+        Set<String> output1 = b1.keySet();
+        Set<String> expected1 = new HashSet<>();
+        assertEquals(output1,expected1);
+    }
+
+    @Test
+    public void removeTest() {
+        BSTMap<String, Integer> b = new BSTMap<String, Integer>();
+        for (int i = 0; i < 455; i++) {
+            b.put("hi" + i, i);
+        }
+        int output = b.remove("hi0");
+        int expected = 0;
+        int outputSize = b.size();
+        int expectedSize = 454;
+        assertEquals(output,expected);
+        assertEquals(expectedSize,outputSize);
+
+        int output1 = b.remove("hi2");
+        int expected1 = 2;
+        int outputSize1 = b.size();
+        int expectedSize1 = 453;
+        assertEquals(output1,expected1);
+        assertEquals(expectedSize1,outputSize1);
+
+        // test null;
+        assertEquals(b.remove("hi-1"),null);
     }
 
     public static void main(String[] args) {
