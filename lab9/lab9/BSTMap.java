@@ -1,7 +1,5 @@
 package lab9;
 
-import edu.princeton.cs.algs4.SET;
-
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -75,12 +73,12 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private Node putHelper(K key, V value, Node p) {
         if (p == null) {
             size++;
-            p = new Node(key,value);
+            p = new Node(key, value);
             return p;
         }
         if (key.compareTo(p.key) > 0) {
             p.right = putHelper(key, value, p.right);
-        } else if (key.compareTo(p.key) < 0){
+        } else if (key.compareTo(p.key) < 0) {
             p.left = putHelper(key, value, p.left);
         } else {
             p.value = value;
@@ -108,7 +106,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     public Set<K> keySet() {
         Set<K> kset = new HashSet<>();
-        keySetHelper(kset,root);
+        keySetHelper(kset, root);
         return kset;
     }
     private void keySetHelper(Set<K> kset, Node p) {
@@ -130,23 +128,23 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             return findRightMin(p.left);
         }
     }
-    private V removeHelper(K key, Node root) {
-        if (root == null) {
+    private V removeHelper(K key, Node p) {
+        if (p == null) {
             return null;
         }
-        if (key.compareTo(root.key) == 0) {
-            V returnVal = root.value;
-            Node tmp = findRightMin(root.right);
-            root.key = tmp.key;
-            root.value = tmp.value;
+        if (key.compareTo(p.key) == 0) {
+            V returnVal = p.value;
+            Node tmp = findRightMin(p.right);
+            p.key = tmp.key;
+            p.value = tmp.value;
             tmp = null;
             size--;
             return returnVal;
         } else {
-            if (key.compareTo(root.key) > 0) {
-                return removeHelper(key, root.right);
+            if (key.compareTo(p.key) > 0) {
+                return removeHelper(key, p.right);
             } else {
-                return removeHelper(key, root.left);
+                return removeHelper(key, p.left);
             }
         }
     }

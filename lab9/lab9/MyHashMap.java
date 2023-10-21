@@ -63,7 +63,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     public void put(K key, V value) {
         int addr = hash(key);
         V val = buckets[addr].get(key);
-        buckets[addr].put(key,value);
+        buckets[addr].put(key, value);
         if (val == null) {
             size++;
         }
