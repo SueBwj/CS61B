@@ -13,13 +13,12 @@ public class SimpleOomage implements Oomage {
     private static final boolean USE_PERFECT_HASH = true;
     @Override
     public boolean equals(Object o) {
-        // TODO: Write this method
         if (o == null) {
             return false;
         } else {
             if (this.getClass() == o.getClass()) {
                 SimpleOomage tmp = (SimpleOomage) o;
-                if(red == tmp.red && blue == tmp.blue && green == tmp.green) {
+                if (red == tmp.red && blue == tmp.blue && green == tmp.green) {
                     return true;
                 }
                 return false;
@@ -36,7 +35,7 @@ public class SimpleOomage implements Oomage {
             blue = blue / 5;
             red =  red / 5;
             green = green / 5;
-            return (int)(blue * Math.pow(10.0, 6.0) + green * Math.pow(10.0, 3.0) + red);
+            return (int) (blue * Math.pow(10.0, 6.0) + green * Math.pow(10.0, 3.0) + red);
         }
     }
 
