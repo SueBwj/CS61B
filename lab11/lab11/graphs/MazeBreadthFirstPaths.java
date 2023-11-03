@@ -1,5 +1,4 @@
 package lab11.graphs;
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 /**
@@ -28,10 +27,9 @@ public class MazeBreadthFirstPaths extends MazeExplorer {
 
     /** Conducts a breadth first search of the maze starting at the source. */
     private void bfs() {
-        // TODO: Your code here. Don't forget to update distTo, edgeTo, and marked, as well as call announce()
         Queue<Integer> q = new LinkedList<>();
         q.add(s);
-        while (!q.isEmpty()){
+        while (!q.isEmpty()) {
             int tmp = q.peek();
             marked[tmp] = true;
             announce();
@@ -41,7 +39,7 @@ public class MazeBreadthFirstPaths extends MazeExplorer {
             if (targetFound) {
                 return;
             }
-            for (int w : maze.adj(tmp)){
+            for (int w : maze.adj(tmp)) {
                 if (!marked[w]) {
                     q.add(w);
                     edgeTo[w] = tmp;
